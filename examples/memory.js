@@ -1,9 +1,7 @@
-'use strict'
-
-var opn = require('opn')
-var chart = require('chart-stream')
-var csvWriter = require('csv-write-stream')
-var memoryUsage = require('memory-usage')
+const opn = require('opn')
+const chart = require('../index')
+const csvWriter = require('csv-write-stream')
+const memoryUsage = require('memory-usage')
 
 memoryUsage(2000)
   .pipe(csvWriter())
