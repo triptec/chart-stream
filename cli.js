@@ -1,9 +1,8 @@
 #!/usr/bin/env node
-'use strict'
 
-var pump = require('pump')
-var opn = require('opn')
-var chart = require('./')
+const pump = require('pump')
+const opn = require('opn')
+const chart = require('./')
 
 pump(process.stdin, chart(ready), function (err) {
   if (err) throw err

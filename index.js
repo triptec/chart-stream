@@ -1,16 +1,14 @@
-'use strict'
-
-var path = require('path')
-var http = require('http')
-var PassThrough = require('readable-stream').PassThrough
-var pump = require('pump')
-var ecstatic = require('ecstatic')
-var SSE = require('sse-stream')
+const path = require('path')
+const http = require('http')
+const PassThrough = require('readable-stream').PassThrough
+const pump = require('pump')
+const ecstatic = require('ecstatic')
+const SSE = require('sse-stream')
 
 module.exports = function (cb) {
-  var input = new PassThrough()
-  var server = http.createServer(ecstatic({ root: path.join(__dirname, 'public') }))
-  var sse = SSE('/data')
+  const input = new PassThrough()
+  const server = http.createServer(ecstatic({ root: path.join(__dirname, 'public') }))
+  const sse = SSE('/data')
 
   sse.install(server)
 
