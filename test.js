@@ -1,11 +1,8 @@
-'use strict'
+const test = require('tape')
+const chart = require('./')
 
-var test = require('tape')
-var chart = require('./')
-
-test('call callback', function (t) {
-  chart(function (url) {
+test('call callback', t =>
+  chart(url => {
     t.ok(/^http:\/\/localhost:\d+/.test(url))
     t.end()
-  })
-})
+  }))
