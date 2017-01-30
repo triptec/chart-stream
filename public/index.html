@@ -11,6 +11,7 @@
       margin: 0;
       padding: 0;
     }
+
     #graph {
       height: 100vh;
     }
@@ -22,104 +23,91 @@
 
 <script>
 
-var es = new EventSource('/data')
-var closed = false
-var headers = []
-var chart
+  const es = new EventSource('/data')
+  let closed = false
+  const headers = []
+  let chart
 
-es.onmessage = function (ev) {
-  if (closed) return
-  if (ev.data.trim() === '') return
+  es.onmessage = ev => {
+    if (closed) return
+    if (ev.data.trim() === '') return
 
-  var rows = parseCsv(ev.data)
+    const rows = parseCsv(ev.data)
 
-  if (!chart) {
-    chart = initChart(rows)
-  } else {
-    append(rows)
-  }
-}
-
-es.addEventListener('end', function () {
-  if (closed) return
-  es.close()
-  closed = true
-}, true)
-
-es.onerror = function (err) {
-  closed = true
-  throw err
-}
-
-function parseCsv (str) {
-  return str
-    .split('\n')
-    .filter(function (line) {
-      return !!line.trim()
-    })
-    .map(function (line) {
-      return line.split(',')
-    })
-}
-
-function hasHeader (rows) {
-  return !/^\d+$/.test(rows[0][0])
-}
-
-function initChart (rows) {
-  var columns = []
-  var showLegend = hasHeader(rows)
-
-  if (showLegend) {
-    rows.shift().forEach(function (head) {
-      headers.push(head)
-      columns.push([head])
-    })
-  } else {
-    for (var i = 0; i < rows[0].length; i++) {
-      headers.push(n)
-      columns.push([n])
+    if (!chart) {
+      chart = initChart(rows)
+    } else {
+      append(rows)
     }
   }
 
-  rows.forEach(function (row) {
-    row.forEach(function (col, i) {
-      columns[i].push(parseInt(col, 10))
-    })
-  })
+  const parseCsv = str =>
+    str
+      .split('\n')
+      .filter(line => !!line.trim())
+      .map(line => line.split(','))
 
-  var opts = {
-    bindto: '#graph',
-    data: {
-      columns: columns,
-      type: 'line'
-    },
-    point: { show: false },
-    axis: { x: { show: false } },
-    legend: { show: showLegend }
+  const hasHeader = rows =>
+    !/^\d+$/.test(rows[0][0])
+
+  es.addEventListener('end', () => {
+    if (closed) return
+    es.close()
+    closed = true
+  }, true)
+
+  es.onerror = err => {
+    closed = true
+    throw err
   }
 
-  return c3.generate(opts)
-}
+  function initChart(rows) {
+    const columns = []
+    const showLegend = hasHeader(rows)
 
-function append (rows) {
-  var columns = []
+    if (showLegend) {
+      rows.shift().forEach(head => {
+        headers.push(head)
+        columns.push([head])
+      })
+    } else {
+      for (let i = 0; i < rows[0].length; i++) {
+        headers.push(n)
+        columns.push([n])
+      }
+    }
 
-  headers.forEach(function (head, i) {
-    columns.push([head])
-  })
+    rows.forEach(row =>
+      row.forEach((col, i) =>
+        columns[i].push(parseInt(col, 10))))
 
-  rows.forEach(function (row) {
-    row.forEach(function (col, i) {
-      columns[i].push(parseInt(col, 10))
+    return c3.generate({
+      bindto: '#graph',
+      data: {
+        columns: columns,
+        type: 'line'
+      },
+      point: { show: false },
+      axis: { x: { show: false } },
+      legend: { show: showLegend }
     })
-  })
+  }
 
-  chart.flow({
-    columns: columns,
-    length: 0
-  })
-}
+  function append(rows) {
+    const columns = []
+
+    headers.forEach((head, i) =>
+      columns.push([head]))
+
+    rows.forEach(row =>
+      row.forEach((col, i) =>
+        columns[i].push(parseInt(col, 10))))
+
+    chart.flow({
+      columns: columns,
+      length: 0
+    })
+  }
 
 </script>
 </body>
