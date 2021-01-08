@@ -18,7 +18,7 @@ module.exports = function (cb) {
   })
 
   server.listen(function () {
-    console.log("listening: " +server.address().port)
+    console.log("listening: http://vimla:" +server.address().port)
     sse.interval.unref()
     //cb('http://localhost:' + server.address().port)
   })
