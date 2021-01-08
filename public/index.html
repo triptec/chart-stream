@@ -31,7 +31,7 @@
   es.onmessage = ev => {
     if (closed) return
     if (ev.data.trim() === '') return
-
+    console.log(ev.data);
     const rows = parseCsv(ev.data)
 
     if (!chart) {
@@ -103,10 +103,10 @@
     rows.forEach(row =>
       row.forEach((col, i) =>
         columns[i].push(parseFloat(col, 10))))
-    console.log(columns);
+    console.log(columns)
     chart.flow({
       columns: columns,
-      //length: 0
+      length: 0
     })
   }
 
