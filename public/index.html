@@ -88,7 +88,9 @@
         type: 'line'
       },
       point: { show: false },
-      axis: { x: { show: true, type: "timeseries" } },
+      axis: { x: { show: true, type: "timeseries",tick: {
+            format: function (x) { return x; }
+          } } },
       legend: { show: showLegend }
     })
   }
