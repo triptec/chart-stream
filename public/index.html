@@ -97,13 +97,13 @@
   function append(rows) {
     const columns = []
 
-    //headers.forEach((head, i) =>
-    //  columns.push([head]))
+    headers.forEach((head, i) =>
+      columns.push([head]))
 
     rows.forEach(row =>
       row.forEach((col, i) =>
         columns[i].push(parseFloat(col, 10))))
-
+    console.log(columns);
     chart.flow({
       columns: columns,
       //length: 0
