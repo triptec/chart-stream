@@ -89,7 +89,7 @@
       },
       point: { show: false },
       axis: { x: { show: true, type: "timeseries",tick: {
-            format: function (x) { return x; }
+            format: function (x) { return x.getTime(); }
           } } },
       legend: { show: showLegend }
     })
