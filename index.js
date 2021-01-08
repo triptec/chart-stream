@@ -6,6 +6,7 @@ const ecstatic = require('ecstatic')
 const SSE = require('sse-stream')
 
 module.exports = function (cb) {
+  console.log("OK")
   const input = new PassThrough()
   const server = http.createServer(ecstatic({ root: path.join(__dirname, 'public') }))
   const sse = SSE('/data')
@@ -17,11 +18,12 @@ module.exports = function (cb) {
   })
 
   server.listen(function () {
+    console.log("listening: " +server.address().port)
     sse.interval.unref()
-    cb('http://localhost:' + server.address().port)
+    //cb('http://localhost:' + server.address().port)
   })
 
-  server.unref()
+  //server.unref()
 
   return input
 }

@@ -6,9 +6,12 @@ const chart = require('./')
 
 pump(process.stdin, chart(ready), err => {
   if (err) throw err
+  console.log("woot")
   process.exit()
 })
 
 function ready (url) {
-  opn(url)
+  console.log("ready")
+  let res = opn(url)
+  console.log(res)
 }

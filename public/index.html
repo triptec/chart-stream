@@ -79,7 +79,7 @@
 
     rows.forEach(row =>
       row.forEach((col, i) =>
-        columns[i].push(parseInt(col, 10))))
+        columns[i].push(parseFloat(col, 10))))
 
     return c3.generate({
       bindto: '#graph',
@@ -88,7 +88,7 @@
         type: 'line'
       },
       point: { show: false },
-      axis: { x: { show: false } },
+      axis: { x: { show: true } },
       legend: { show: showLegend }
     })
   }
@@ -101,7 +101,7 @@
 
     rows.forEach(row =>
       row.forEach((col, i) =>
-        columns[i].push(parseInt(col, 10))))
+        columns[i].push(parseFloat(col, 10))))
 
     chart.flow({
       columns: columns,
