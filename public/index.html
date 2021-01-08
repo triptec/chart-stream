@@ -89,7 +89,7 @@
         type: 'line'
       },
       point: { show: false },
-      axis: { x: { show: true } },
+      axis: { x: { show: true, tick: { fit: true} } },
       legend: { show: showLegend }
     })
   }
@@ -106,7 +106,7 @@
     console.log(columns)
     chart.flow({
       columns: columns,
-      //length: 0
+      length: 0
     })
   }
 
