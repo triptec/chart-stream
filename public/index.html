@@ -37,7 +37,9 @@
     if (!chart) {
       chart = initChart(rows)
     } else {
-      append(rows)
+      setTimeout(()=>{
+        append(rows)
+      }, 2000)
     }
   }
 
